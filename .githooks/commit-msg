@@ -6,8 +6,9 @@ commit_msg_file="$1"
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+NC='\033[0m' # No Color toegevoegd
 
-awk -v red="$RED" -v grn="$GREEN" -v yellow="$YELLOW" '
+awk -v red="$RED" -v grn="$GREEN" -v yellow="$YELLOW" -v nc="$NC" '
 BEGIN {
   has_error = 0
 }
@@ -66,7 +67,8 @@ END {
     print "--------------------------------------------------------"
     exit 1
   } else {
-    print grn "✔ Commit message successfully validated!"
+    # Sluit de regel af met nc zodat de terminalkleur netjes gereset wordt
+    print grn "✔ Commit message successfully validated!" nc
   }
 }
 ' "$commit_msg_file"
