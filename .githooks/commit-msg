@@ -19,15 +19,15 @@ NR == 1 {
   header = $0
 
   if (length(header) > 100) {
-    print red "     ❌ FOUT: Je commit-header is te lang (" length(header) " tekens)." nc
-    print yellow "  Maximum toegestaan is 100 tekens." nc
+    print red "❌ FOUT: Je commit-header is te lang (" length(header) " tekens)." nc
+    print yellow "   Maximum toegestaan is 100 tekens." nc
     valid = 0
   }
 
   if (header !~ /^(feat|fix|docs|style|refactor|test|chore)(\([^()]+\))?: /) {
-    print red "     ❌ FOUT: Ongeldig formaat voor je commit-header." nc
-    print green "   👉 Gebruik het formaat: type(scope): onderwerp  of  type: onderwerp" nc
-    print yellow "  Geldige types zijn: feat, fix, docs, style, refactor, test, chore" nc
+    print red "❌ FOUT: Ongeldig formaat voor je commit-header." nc
+    print green "   👉 Gebruik het formaat: type(scope): onderwerp of type: onderwerp" nc
+    print yellow "   Geldige types zijn: feat, fix, docs, style, refactor, test, chore" nc
     valid = 0
   } else {
     subject = header
@@ -39,7 +39,7 @@ NR == 1 {
     }
 
     if (subject ~ /\.$/) {
-      print red "   ❌ FOUT: Het onderwerp mag niet eindigen met een punt." nc
+      print red "❌ FOUT: Het onderwerp mag niet eindigen met een punt." nc
       valid = 0
     }
   }
@@ -68,7 +68,7 @@ END {
     print ""
     print red "--------------------------------------------------------"
     print "❌ Commit afgekeurd! Pas je commit-bericht aan en probeer opnieuw."
-    print "--------------------------------------------------------" + nc
+    print "--------------------------------------------------------" nc
     exit 1
   }
 }
