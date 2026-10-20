@@ -1,5 +1,3 @@
-# Created with Gemini model 3
-
 #!/bin/sh
 
 commit_msg_file="$1"
@@ -69,3 +67,5 @@ END {
   }
 }
 ' "$commit_msg_file"
+
+# Created with Gemini model 3

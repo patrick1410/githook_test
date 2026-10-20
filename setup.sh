@@ -11,3 +11,5 @@ tr -d '\r' < .githooks/commit-msg > .githooks/commit-msg.tmp && mv .githooks/com
 chmod +x .githooks/commit-msg
 
 echo "🚀 All set! Git hooks are now active via the .githooks directory."
+
+# Created with Gemini model 3
