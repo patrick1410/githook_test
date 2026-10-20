@@ -1,0 +1,67 @@
+
+#!/bin/sh
+
+set -eu
+
+commit_msg_file="$1"
+
+awk '
+BEGIN {
+  valid_types = "feat|fix|docs|style|refactor|test|chore"
+  valid = 1
+}
+
+NR == 1 {
+  header = $0
+
+  if (length(header) > 100) {
+    print "ERROR: Header exceeds 100 characters."
+    valid = 0
+  }
+
+  if (header !~ /^(feat|fix|docs|style|refactor|test|chore)(\([^()]+\))?: /) {
+    print "ERROR: Invalid commit header format."
+    print "Use: type: subject or type(scope): subject"
+    valid = 0
+  } else {
+    subject = header
+    sub(/^[^:]+: /, "", subject)
+
+    if (length(subject) == 0) {
+      print "ERROR: Subject must not be empty."
+      valid = 0
+    }
+
+    if (subject ~ /\.$/) {
+      print "ERROR: Subject must not end with a period."
+      valid = 0
+    }
+  }
+}
+
+NR == 2 && length($0) != 0 {
+  print "ERROR: Add a blank line between the header and body."
+  valid = 0
+}
+
+{
+  lines[NR] = $0
+}
+
+END {
+  for (i = 2; i <= NR; i++) {
+    if (lines[i] ~ /^(BREAKING CHANGE:|Closes #|Fixes #|Resolves #)/) {
+      if (i > 1 && length(lines[i - 1]) != 0) {
+        print "ERROR: Add a blank line before the footer."
+        valid = 0
+      }
+    }
+  }
+
+  if (!valid) {
+    print ""
+    print "Commit rejected. Please fix your commit message."
+    exit 1
+  }
+}
+' "$commit_msg_file"
