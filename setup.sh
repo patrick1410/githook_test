@@ -3,10 +3,10 @@
 # Vertel Git waar de hooks staan
 git config core.hooksPath .githooks
 
-# Zorg dat het script uitvoerbaar is
+# Zorg dat de hook uitvoerbaar is
 chmod +x .githooks/commit-msg
 
-# Eventuele Windows-tekens weghalen voor de zekerheid
+# Verwijder eventuele corrupte Windows-tekens (\r)
 tr -d '\r' < .githooks/commit-msg > .githooks/commit-msg.tmp && mv .githooks/commit-msg.tmp .githooks/commit-msg
 chmod +x .githooks/commit-msg
 
