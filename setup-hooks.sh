@@ -1,14 +1,13 @@
 #!/bin/sh
 
-# Maak de hooks map in .git aan als die niet bestaat
-mkdir -p .git/hooks
+# Vertel Git waar de hooks staan
+git config core.hooksPath .githooks
 
-# Kopieer de gedeelde hook naar de lokale .git/hooks map
-cp .githooks/commit-msg .git/hooks/commit-msg
+# Zorg dat het script uitvoerbaar is
+chmod +x .githooks/commit-msg
 
-# Maak hem uitvoerbaar en haal Windows-tekens weg
-chmod +x .git/hooks/commit-msg
-tr -d '\r' < .git/hooks/commit-msg > .git/hooks/commit-msg.tmp && mv .git/hooks/commit-msg.tmp .git/hooks/commit-msg
-chmod +x .git/hooks/commit-msg
+# Eventuele Windows-tekens weghalen voor de zekerheid
+tr -d '\r' < .githooks/commit-msg > .githooks/commit-msg.tmp && mv .githooks/commit-msg.tmp .githooks/commit-msg
+chmod +x .githooks/commit-msg
 
-echo "✅ Git hooks zijn succesvol geïnstalleerd!"
+echo "🚀 All set! Git hooks are now active via the .githooks directory."

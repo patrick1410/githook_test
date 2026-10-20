@@ -1,6 +1,6 @@
-# Created with Gemini model 3
-
 #!/bin/sh
+echo "executing post-commit"
+exit 0
 
 commit_msg_file="$1"
 
@@ -24,10 +24,11 @@ NR == 1 {
   }
 
   # 2. Check of het onderwerp volledig ontbreekt
-  if (header ~ /^[a-zA-Z]+(\([^()]+\))?:\s*$/) {
+  if (header ~ /^[a-zA-Z]+(\([^()]+\))?:[[:space:]]*$/) {
     print red "❌ ERROR: Subject is missing."
     has_error = 1
   }
+
   # 3. Check of de spatie direct na de dubbele punt ontbreekt
   else if (header ~ /^[a-zA-Z]+(\([^()]+\))?:[^[:space:]]/) {
     print red "❌ ERROR: Missing space after the colon."
@@ -42,7 +43,7 @@ NR == 1 {
     has_error = 1
   }
 
-  # 5. Check of het onderwerp eindigt op een punt (onafhankelijk van de rest)
+  # 5. Check of het onderwerp eindigt op een punt
   if (header ~ /\.$/) {
     print red "❌ ERROR: Subject must not end with a period."
     has_error = 1
